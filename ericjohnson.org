@@ -173,6 +173,10 @@
 (global-set-key (kbd "C-x C-p") 'find-file-at-point)
 #+end_src
 
+** launch eshell
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-M-s") 'eshell)
+#+end_src
 
 * things i don't have yet but want
 color ps1 in eshell in a good way
