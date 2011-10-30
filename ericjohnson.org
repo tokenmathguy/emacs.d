@@ -10,7 +10,8 @@
 #+end_quote
 
 #+begin_quote
-  If you suffer as a Emacs Homepageian, do not be ashamed but praise True Editor that you bear that name.
+  If you suffer as a Emacs Homepageian, do not be ashamed but praise
+True Editor that you bear that name.
 
   -- fsbot (,praise)
 #+end_quote
@@ -61,13 +62,6 @@
 (color-theme-initialize)
 (setq color-theme-is-global t)
 (color-theme-twilight)
-#+end_src
-
-** ansi color for crazy characters
-#+begin_src emacs-lisp
-(require 'ansi-color)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on) 
-(add-hook 'eshell-preoutput-filter-functions 'ansi-color-filter-apply)
 #+end_src
 
 * editing 
@@ -139,13 +133,13 @@
     (require 'em-prompt)
     (require 'em-term)
     (setenv "PAGER" "cat")
-    (add-hook 'eshell-mode-hook ;; for some reason this needs to be a hook
+    (add-hook 'eshell-mode-hook ;; for some reason this needs to be a hook 
               '(lambda () (define-key eshell-mode-map "\C-a" 'eshell-bol)))
     (add-to-list 'eshell-visual-commands "ssh")
     (add-to-list 'eshell-visual-commands "tail")
-    (add-to-list 'eshell-command-completions-alist
-                  '("gunzip" "gz\\'"))
-    (add-to-list 'eshell-command-completions-alist
+    (add-to-list 'eshell-command-completions-alist 
+                 '("gunzip" "gz\\'"))
+    (add-to-list 'eshell-command-completions-alist 
                  '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))
     (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))
 
@@ -184,8 +178,13 @@ color ps1 in eshell in a good way
 pretty printing lambdas
 
 pull in aliases from bash
+- this is actually done in .bashrc: 
+    alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/eshell/alias
 
 repeated tab characters whereever i want them
+
+* things i don't have that look interesting
+plan9 smart shell
 
 * notes and stuff
 
