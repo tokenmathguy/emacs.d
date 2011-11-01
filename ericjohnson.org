@@ -71,6 +71,12 @@ True Editor that you bear that name.
 (evil-mode 1)
 #+end_src
 
+** max width for long-lines and column numbers enabled
+#+begin_src emacs-lisp
+(setq-default fill-column 100)
+(column-number-mode 1)
+#+end_src
+
 * doing things
 ** ido
 #+begin_src emacs-lisp
@@ -177,11 +183,9 @@ color ps1 in eshell in a good way
 
 pretty printing lambdas
 
-pull in aliases from bash
-- this is actually done in .bashrc: 
-    alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/eshell/alias
-
 repeated tab characters whereever i want them
+
+syntax highlighted config scripts such as bashrc
 
 * things i don't have that look interesting
 plan9 smart shell
