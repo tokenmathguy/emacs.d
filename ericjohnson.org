@@ -153,6 +153,16 @@ True Editor that you bear that name.
     (expand-file-name "./" (expand-file-name "eshell" user-emacs-directory)))
 #+end_src
 
+* programming
+** python stuff
+#+begin_src emacs-lisp
+(setenv "PYTHONPATH" ".")
+(require 'python-mode)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+
+(require 'ipython)
+#+end_src
+
 * keybindings
 ** increase text size
 #+begin_src emacs-lisp
@@ -176,6 +186,11 @@ True Editor that you bear that name.
 ** launch eshell
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-M-s") 'eshell)
+#+end_src
+
+** quick longlines 
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x M-l") 'longlines-mode)
 #+end_src
 
 * things i don't have yet but want
