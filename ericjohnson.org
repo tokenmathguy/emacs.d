@@ -163,6 +163,13 @@ True Editor that you bear that name.
 (require 'ipython)
 #+end_src
 
+* browsing
+** launching chromium
+#+begin_src emacs-lisp
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium-browser")
+#+end_src
+
 * keybindings
 ** increase text size
 #+begin_src emacs-lisp
