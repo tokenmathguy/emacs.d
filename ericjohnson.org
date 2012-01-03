@@ -77,6 +77,16 @@ True Editor that you bear that name.
 (column-number-mode 1)
 #+end_src
 
+** create latex layout
+#+begin_src emacs-lisp
+(defun split-window-three-parts ()
+  "Split window into three parts."
+  (interactive)
+  (split-window-vertically)
+  (split-window-horizontally)
+)
+#+end_src
+
 * doing things
 ** ido
 #+begin_src emacs-lisp
@@ -156,11 +166,11 @@ True Editor that you bear that name.
 * programming
 ** python stuff
 #+begin_src emacs-lisp
-(setenv "PYTHONPATH" ".")
-(require 'python-mode)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;;(setenv "PYTHONPATH" ".")
+;;(require 'python-mode)
+;;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
-(require 'ipython)
+;;(require 'ipython)
 #+end_src
 
 * browsing
@@ -173,13 +183,13 @@ True Editor that you bear that name.
 * keybindings
 ** increase text size
 #+begin_src emacs-lisp
-(define-key global-map (kbd "C-+") 'text-scale-increase)
-(define-key global-map (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
 
 ** better grep
 #+begin_src emacs-lisp
-(define-key global-map "\C-x\C-r" 'rgrep)
+(global-set-key (kbd "C-x C-r") 'rgrep)
 #+end_src
 
 ** finding files
@@ -188,7 +198,6 @@ True Editor that you bear that name.
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 (global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
 #+end_src
-(global-set-key (kbd "C-x C-p") 'find-file-at-point)
 
 ** launch eshell
 #+begin_src emacs-lisp
@@ -198,6 +207,11 @@ True Editor that you bear that name.
 ** quick longlines 
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x M-l") 'longlines-mode)
+#+end_src
+
+** create working split
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x 4") 'split-window-three-parts)
 #+end_src
 
 * things i don't have yet but want
