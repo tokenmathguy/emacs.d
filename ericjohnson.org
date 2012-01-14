@@ -127,10 +127,16 @@ True Editor that you bear that name.
 * eshell
 ** prompt modification
 #+begin_src emacs-lisp
+(defun host-name ()
+  "Returns the name of the current host minus the domain."
+  (let ((hostname (downcase (system-name))))
+    (save-match-data
+      (substring hostname (string-match "^[^.]+" hostname) (match-end 0)))))
+
 (setq eshell-prompt-function
   (lambda ()
     (concat "\n" (eshell/pwd) "\n" 
-            "[" (getenv "USER") "@" (getenv "HOSTNAME") "]"
+            "[" (user-login-name) "@" (host-name) "]"
             (if (= (user-uid) 0) " # " " $ "))))
 #+end_src
 
@@ -176,6 +182,11 @@ True Editor that you bear that name.
 ;;(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
 ;;(require 'ipython)
+#+end_src
+
+** speaking statistics
+#+begin_src emacs-lisp
+(require 'ess-site)
 #+end_src
 
 * browsing
