@@ -87,6 +87,11 @@ True Editor that you bear that name.
 )
 #+end_src
 
+** stash tilde files
+#+begin_src emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+end_src
+
 * doing things
 ** ido
 #+begin_src emacs-lisp
