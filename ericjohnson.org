@@ -62,7 +62,7 @@ make sure to install color-theme from your package manager as recommended
 (require 'color-theme)
 (color-theme-initialize)
 (setq color-theme-is-global t)
-(load-file "~/.emacs.d/site-lisp/color-theme-twilight.el")
+(require 'color-theme-twilight)
 (color-theme-twilight)
 #+end_src
 
@@ -91,7 +91,58 @@ make sure to install color-theme from your package manager as recommended
 
 ** stash tilde files
 #+begin_src emacs-lisp
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+end_src
+
+* eshell
+** prompt modification
+#+begin_src emacs-lisp
+(defun host-name ()
+  "Returns the name of the current host minus the domain."
+  (let ((hostname (downcase (system-name))))
+    (save-match-data
+      (substring hostname (string-match "^[^.]+" hostname) (match-end 0)))))
+
+(setq eshell-prompt-function
+  (lambda ()
+    (concat "\n" (eshell/pwd) "\n" 
+            "[" (user-login-name) "@" (host-name) "]"
+            (if (= (user-uid) 0) " # " " $ "))))
+(setq eshell-prompt-regexp "^\[.*@.*\] [#$] ")
+#+end_src
+   
+** set history size
+#+begin_src emacs-lisp
+(setq eshell-history-size 2048)
+#+end_src
+
+** history completion and save history on exit
+#+begin_src emacs-lisp
+(setq eshell-cmpl-cycle-completions nil
+      eshell-save-history-on-exit t
+      eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\|\\.bzr\\)/\\'")
+#+end_src
+
+** eshell stuff from eschulte starter kit (must dig into this to either rip out or keep)
+#+begin_src emacs-lisp
+(eval-after-load 'esh-opt
+ '(progn
+    (require 'em-cmpl)
+    (require 'em-prompt)
+    (require 'em-term)
+    (setenv "PAGER" "less")
+    (add-hook 'eshell-mode-hook ;; for some reason this needs to be a hook 
+              '(lambda () (define-key eshell-mode-map "\C-a" 'eshell-bol)))
+    (add-to-list 'eshell-visual-commands "ssh")
+    (add-to-list 'eshell-visual-commands "tail")
+    (add-to-list 'eshell-command-completions-alist 
+                 '("gunzip" "gz\\'"))
+    (add-to-list 'eshell-command-completions-alist 
+                 '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))
+    (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))
+
+  (setq eshell-directory-name
+    (expand-file-name "./" (expand-file-name "eshell" user-emacs-directory)))
 #+end_src
 
 * doing things
@@ -124,56 +175,6 @@ make sure to install color-theme from your package manager as recommended
    (haskell . t)
    (plantuml . t)
    (gnuplot . t)))
-#+end_src
-
-* eshell
-** prompt modification
-#+begin_src emacs-lisp
-(defun host-name ()
-  "Returns the name of the current host minus the domain."
-  (let ((hostname (downcase (system-name))))
-    (save-match-data
-      (substring hostname (string-match "^[^.]+" hostname) (match-end 0)))))
-
-(setq eshell-prompt-function
-  (lambda ()
-    (concat "\n" (eshell/pwd) "\n" 
-            "[" (user-login-name) "@" (host-name) "]"
-            (if (= (user-uid) 0) " # " " $ "))))
-#+end_src
-   
-** set history size
-#+begin_src emacs-lisp
-(setq eshell-history-size 2048)
-#+end_src
-
-** history completion and save history on exit
-#+begin_src emacs-lisp
-(setq eshell-cmpl-cycle-completions nil
-      eshell-save-history-on-exit t
-      eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\|\\.bzr\\)/\\'")
-#+end_src
-
-** eshell stuff from eschulte starter kit
-#+begin_src emacs-lisp
-(eval-after-load 'esh-opt
- '(progn
-    (require 'em-cmpl)
-    (require 'em-prompt)
-    (require 'em-term)
-    (setenv "PAGER" "less")
-    (add-hook 'eshell-mode-hook ;; for some reason this needs to be a hook 
-              '(lambda () (define-key eshell-mode-map "\C-a" 'eshell-bol)))
-    (add-to-list 'eshell-visual-commands "ssh")
-    (add-to-list 'eshell-visual-commands "tail")
-    (add-to-list 'eshell-command-completions-alist 
-                 '("gunzip" "gz\\'"))
-    (add-to-list 'eshell-command-completions-alist 
-                 '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))
-    (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))
-
-  (setq eshell-directory-name
-    (expand-file-name "./" (expand-file-name "eshell" user-emacs-directory)))
 #+end_src
 
 * programming
