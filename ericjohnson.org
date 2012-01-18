@@ -112,7 +112,6 @@ make sure to install color-theme from your package manager as recommended
     (concat "\n" (eshell/pwd) "\n" 
             "[" (user-login-name) "@" (host-name) "]"
             (if (= (user-uid) 0) " # " " $ "))))
-(setq eshell-prompt-regexp "^\[.*@.*\] [#$] ")
 #+end_src
    
 ** set history size
