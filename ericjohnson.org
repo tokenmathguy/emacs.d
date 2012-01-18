@@ -16,6 +16,10 @@ True Editor that you bear that name.
   -- fsbot (,praise)
 #+end_quote
 
+* prerequisites
+  - install color-theme from your package manager, as recommended
+  - after a fresh clone, issue a git submodule update --init
+
 * default directory and load path
 #+begin_src emacs-lisp
 (let ((default-directory (concat user-emacs-directory (convert-standard-filename "site-lisp/"))))

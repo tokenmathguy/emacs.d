@@ -9,7 +9,7 @@ eshell/*
 doc/*
 url/*
 
-*el
+ericjohnson.el
 *elc
 *html
 *tex
