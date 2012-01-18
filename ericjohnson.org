@@ -57,10 +57,12 @@ True Editor that you bear that name.
 #+end_src
 
 ** color theme
+make sure to install color-theme from your package manager as recommended
 #+begin_src emacs-lisp
 (require 'color-theme)
 (color-theme-initialize)
 (setq color-theme-is-global t)
+(load-file "~/.emacs.d/site-lisp/color-theme-twilight.el")
 (color-theme-twilight)
 #+end_src
 

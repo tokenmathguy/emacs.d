@@ -7,8 +7,6 @@ backups/*
 thumbs/*
 eshell/*
 doc/*
-src/*
-site-lisp/*
 url/*
 
 *el

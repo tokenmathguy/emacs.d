@@ -1,0 +1,9 @@
+[submodule "src/twilight-emacs"]
+	path = src/twilight-emacs
+	url = https://github.com/crafterm/twilight-emacs.git
+[submodule "src/evil"]
+	path = src/evil
+	url = git://gitorious.org/evil/evil.git
+[submodule "src/ess"]
+	path = src/ess
+	url = git://github.com/emacsmirror/ess.git
