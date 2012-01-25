@@ -238,6 +238,11 @@ make sure to install color-theme from your package manager as recommended
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x 4") 'split-window-three-parts)
 #+end_src
+** copy region
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c y") 'copy-region-as-kill)
+#+end_src
+
 
 * things i don't have yet but want
 color ps1 in eshell in a good way
