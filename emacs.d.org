@@ -1,4 +1,4 @@
-#+TITLE: ericjohnson.org
+#+TITLE: emacs.d.org
 #+OPTIONS: toc:2 num:nil ^:nil
 
 #+begin_quote
