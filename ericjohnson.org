@@ -70,6 +70,17 @@ make sure to install color-theme from your package manager as recommended
 (require 'color-theme-twilight)
 (color-theme-twilight)
 #+end_src
+** get rid of tabs
+#+begin_src emacs-lisp
+(setq c-basic-indent 2)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
+;;(setq-default indent-tabs-mode nil)
+
+(require 'cc-mode) 
+  (add-to-list 'c-mode-common-hook
+  (lambda () (setq c-syntactic-indentation nil)))
+#+end_src
 
 * editing 
 ** evil
@@ -238,6 +249,11 @@ make sure to install color-theme from your package manager as recommended
 (global-set-key (kbd "C-x 4") 'split-window-three-parts)
 #+end_src
 
+** copy region as kill
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c y") 'copy-region-as-kill)
+#+end_src
+
 * things i don't have yet but want
 color ps1 in eshell in a good way
 
@@ -259,4 +275,6 @@ plan9 smart shell
 (call-interactively 
   (let ((filename (thing-at-point 'filename))) 
     (if (file-exists-p filename) 'ffap 'ido-find-file)))
+
+(setq js-auto-indent-flag nil)
 
