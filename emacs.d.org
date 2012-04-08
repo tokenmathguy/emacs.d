@@ -1,4 +1,4 @@
-#+TITLE: ericjohnson.org
+#+TITLE: emacs.d.org
 #+OPTIONS: toc:2 num:nil ^:nil
 
 #+begin_quote
@@ -76,6 +76,11 @@ make sure to install color-theme from your package manager as recommended
 #+begin_src emacs-lisp
 (require 'evil)
 (evil-mode 1)
+#+end_src
+   
+** tabs are pure evil
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
 #+end_src
 
 ** max width for long-lines and column numbers enabled
@@ -180,6 +185,18 @@ make sure to install color-theme from your package manager as recommended
    (plantuml . t)
    (gnuplot . t)))
 #+end_src
+   
+   - location of plantuml jar
+#+begin_src emacs-lisp
+(setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar")
+#+end_src
+
+   - ditaa
+#+begin_src emacs-lisp
+(require 'ob-ditaa)
+(setq org-ditaa-jar-path "/usr/share/emacs/site-lisp/org_contrib/scripts/ditaa.jar")
+#+end_src
+
 
 * programming
 ** python stuff
@@ -189,6 +206,7 @@ make sure to install color-theme from your package manager as recommended
 (require 'python-mode)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
+(setq ipython-command "/usr/bin/ipython2")
 (require 'ipython)
 #+end_src
 
@@ -201,7 +219,7 @@ make sure to install color-theme from your package manager as recommended
 ** launching chromium
 #+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium-browser")
+      browse-url-generic-program "chromium")
 #+end_src
 
 * keybindings
@@ -225,7 +243,7 @@ make sure to install color-theme from your package manager as recommended
 
 ** launch eshell
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-M-s") 'eshell)
+(global-set-key (kbd "C-c s") 'eshell)
 #+end_src
 
 ** quick longlines 
@@ -237,6 +255,11 @@ make sure to install color-theme from your package manager as recommended
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-x 4") 'split-window-three-parts)
 #+end_src
+** copy region
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c y") 'copy-region-as-kill)
+#+end_src
+
 
 * things i don't have yet but want
 color ps1 in eshell in a good way
