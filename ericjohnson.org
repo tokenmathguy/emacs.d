@@ -64,22 +64,43 @@ True Editor that you bear that name.
 ** color theme
 make sure to install color-theme from your package manager as recommended
 #+begin_src emacs-lisp
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/color-theme/color-theme.el")
 (require 'color-theme)
 (color-theme-initialize)
 (setq color-theme-is-global t)
+(add-to-list 'load-path "~/.emacs.d/src/twilight-emacs/color-theme-twilight.el")
 (require 'color-theme-twilight)
 (color-theme-twilight)
 #+end_src
-** get rid of tabs
-#+begin_src emacs-lisp
-(setq c-basic-indent 2)
-(setq tab-width 4)
-(setq indent-tabs-mode nil)
-;;(setq-default indent-tabs-mode nil)
 
-(require 'cc-mode) 
-  (add-to-list 'c-mode-common-hook
-  (lambda () (setq c-syntactic-indentation nil)))
+** wiki-mode for coloring
+#+begin_src emacs-lisp
+;; WikiCreole mode (wiki-mode)
+;; Thanks to Alex Schroeder of www.emacswiki.org 
+;; And Jason Blevins for his inspiring Markdown Mode
+;; http://jblevins.org/projects/markdown-mode/
+(define-generic-mode 'wiki-mode 
+  nil ; comments 
+  nil; keywords 
+  '(("^\\(= \\)\\(.*?\\)\\($\\| =$\\)" . 'info-title-1)
+    ("^\\(== \\)\\(.*?\\)\\($\\| ==$\\)" . 'info-title-2)
+    ("^\\(=== \\)\\(.*?\\)\\($\\| ===$\\)" . 'info-title-3)
+    ("^\\(====+ \\)\\(.*?\\)\\($\\| ====+$\\)" . 'info-title-4) 
+    ("\\[\\[.*?\\]\\]" . 'link)
+    ("\\[.*\\]" . 'link)
+    ("\\[b\\].*?\\[/b\\]" . 'bold)
+    ("\\[i\\].*?\\[/i\\]" . 'italic)
+    ("\\*\\*.*?\\*\\*" . 'bold)
+    ("\\*.*?\\*" . 'bold)
+    ("\\_<//.*?//" . 'italic)
+    ("\\_</.*?/" . 'italic)
+    ("__.*?__" . 'italic)
+    ("_.*?_" . 'underline)
+    ("|+=?" . font-lock-string-face)
+    ("\\\\\\\\[ \t]+" . font-lock-warning-face)) ; font-lock list
+  '(".wiki\\'"); auto-mode-alist
+  '((lambda () (require 'info) (require 'goto-addr))); function-list
+  "Wiki stuff including Creole Markup and BBCode.")
 #+end_src
 
 * editing 
@@ -89,7 +110,13 @@ make sure to install color-theme from your package manager as recommended
 (evil-mode 1)
 #+end_src
 
-** max width for long-lines and column numbers enabled
+** tabs are evil
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+end_src
+
+** max width for
+   long-lines and column numbers enabled
 #+begin_src emacs-lisp
 (setq-default fill-column 100)
 (column-number-mode 1)
@@ -100,14 +127,21 @@ make sure to install color-theme from your package manager as recommended
 (defun split-window-three-parts ()
   "Split window into three parts."
   (interactive)
-  (split-window-vertically)
   (split-window-horizontally)
+  (split-window-vertically)
 )
 #+end_src
 
 ** stash tilde files
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+end_src
+
+* images
+** image manipulation
+#+begin_src emacs-lisp
+(autoload 'eimp-mode "eimp" "Emacs Image Manipulation Package." t)
+(add-hook 'image-mode-hook 'eimp-mode)
 #+end_src
 
 * eshell
@@ -154,8 +188,7 @@ make sure to install color-theme from your package manager as recommended
                  '("gunzip" "gz\\'"))
     (add-to-list 'eshell-command-completions-alist 
                  '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))
-    (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))
-
+			))
   (setq eshell-directory-name
     (expand-file-name "./" (expand-file-name "eshell" user-emacs-directory)))
 #+end_src
@@ -205,14 +238,21 @@ make sure to install color-theme from your package manager as recommended
 
 ** speaking statistics
 #+begin_src emacs-lisp
-(require 'ess-site)
+;(require 'ess-site)
+#+end_src
+
+** c
+#+begin_src emacs-lisp
+(require 'cc-mode) 
+  (add-to-list 'c-mode-common-hook
+  (lambda () (setq c-syntactic-indentation nil)))
 #+end_src
 
 * browsing
-** launching chromium
+** launching firefox
 #+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium-browser")
+      browse-url-generic-program "firefox")
 #+end_src
 
 * keybindings
@@ -232,6 +272,7 @@ make sure to install color-theme from your package manager as recommended
 (global-set-key (kbd "C-x C-f") 'ido-find-file)
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 (global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
+(global-set-key (kbd "C-x F") 'find-file-at-point)
 #+end_src
 
 ** launch eshell
@@ -254,6 +295,19 @@ make sure to install color-theme from your package manager as recommended
 (global-set-key (kbd "C-c y") 'copy-region-as-kill)
 #+end_src
 
+** navigate images
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x M--") 'eimp-decrease-image-size)
+(global-set-key (kbd "C-x M-+") 'eimp-increase-image-size)
+(global-set-key (kbd "C-x M-= w") 'eimp-fit-image-width-to-window)
+(global-set-key (kbd "C-x M-= h") 'eimp-fit-image-height-to-window)
+(global-set-key (kbd "C-x M-= =") 'eimp-fit-image-to-window)
+(global-set-key (kbd "C-x <M-left>") 'eimp-roll-image-left)
+(global-set-key (kbd "C-x <M-right>") 'eimp-roll-image-right)
+(global-set-key (kbd "C-x <M-up>") 'eimp-roll-image-up)
+(global-set-key (kbd "C-x <M-down>") 'eimp-roll-image-down)
+#+end_src
+
 * things i don't have yet but want
 color ps1 in eshell in a good way
 
@@ -268,13 +322,7 @@ plan9 smart shell
 
 * notes and stuff
 
-  - some stuff jlk on #emacs suggested 
-(ffap-bindings)
-
-(require 'thingatpt)
-(call-interactively 
-  (let ((filename (thing-at-point 'filename))) 
-    (if (file-exists-p filename) 'ffap 'ido-find-file)))
 
 (setq js-auto-indent-flag nil)
 
+;    (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))

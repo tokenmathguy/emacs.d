@@ -2,6 +2,7 @@ loaddefs.el*
 auto-save-list
 places
 tramp
+image-dired
 
 backups/*
 thumbs/*
